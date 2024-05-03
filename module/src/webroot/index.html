@@ -1,201 +1,268 @@
-<!doctype html>
-<html lang="en-EN" class="mdui-theme-auto">
-
-  <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
     <meta name="renderer" content="webkit"/>
+    <link href='https://fonts.googleapis.com/css2?family=Open+Sans&display=swap' rel='stylesheet'>
 
-	<!-- OpenSans-->
-	<link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+    <!-- Filled icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-	<!-- Filled fonts.googleapis.com-->
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Outlined icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
-	<!-- Outlined -->
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- Rounded icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 
-	<!-- Rounded -->
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <!-- Sharp icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
 
-	<!-- Sharp -->
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-
-	<!-- Two Tone -->
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Two+Tone" rel="stylesheet">
+    <!-- Two Tone icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Two+Tone" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">
     <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
 
-    <!-- 如果使用了组件的 icon 属性，还需要引入图标的 CSS 文件 -->
-	<mdui-top-app-bar style="position: relative;">
+    <!-- Detect system theme and set appropriate class -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+            const html = document.querySelector('html');
+            if (prefersDarkScheme.matches) {
+                html.classList.add('mdui-theme-dark');
+            } else {
+                html.classList.remove('mdui-theme-dark');
+            }
+        });
+    </script>
 
-	  <mdui-top-app-bar-title>OpenZygisk</mdui-top-app-bar-title>
-	  <mdui-dropdown>
-		<mdui-button-icon slot="trigger" icon="more_vert"></mdui-button-icon>
+    <!-- Your custom styles -->
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 14px; /* Normalized text size */
+        }
+        .force-denylist {
+            margin: 20px 0;
+            font-family: 'Open Sans', sans-serif;
+        }
+        .switch-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+        }
+        .switch-right {
+            margin-left: auto;
+            padding: 10px 25px 10px 10px;
+        }
+        .switch-label {
+            margin-top: 0px;
+            margin-left: 10px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .container {
+            border-radius: 15px; /* Slightly increased rounding radius */
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+        }
+        .module-list {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .module-name {
+            flex: 1; /* Take up remaining space */
+            white-space: nowrap; /* Prevents text from wrapping */
+            overflow: hidden; /* Hide overflow text */
+            text-overflow: ellipsis; /* Display ellipsis when text overflows */
+        }
+        .status-box {
+            direction: rtl;
+            min-width: 30px; /* Adjust as needed */
+            text-align: right;
+            border-radius: 15px; /* Slightly increased rounding radius */
+            padding: 5px 10px;
+            font-weight: bold;
+            white-space: nowrap; /* Prevents text from wrapping */
+            overflow: hidden; /* Hide overflow text */
+            text-overflow: ellipsis; /* Display ellipsis when text overflows */
+        }
+        .status-green {
+            background-color: green;/*#9CCC65; /* Milder green color */
+            color: white; /* Darker text color */
+        }
+        .status-red {
+            background-color: #F44336; /* More reddish pink color */
+            color: white; /* Darker text color */
+        }
+    </style>
+</head>
+<body>
+    <mdui-top-app-bar style="position: relative;">
+        <mdui-top-app-bar-title>OpenZygisk</mdui-top-app-bar-title>
+        <mdui-dropdown>
+            <mdui-button-icon slot="trigger" icon="more_vert"></mdui-button-icon>
+            <mdui-menu selects="single" value="auto" class="menu">
+                <mdui-menu-item value="light">Light</mdui-menu-item>
+                <mdui-menu-item value="dark">Dark</mdui-menu-item>
+                <mdui-divider></mdui-divider>
+                <mdui-menu-item value="auto">System</mdui-menu-item>
+            </mdui-menu>
+        </mdui-dropdown>
+    </mdui-top-app-bar>
 
-		<mdui-menu selects="single" value="auto" class="menu">
-		<mdui-menu-item value="light">Light</mdui-menu-item>
-		<mdui-menu-item value="dark">Dark</mdui-menu-item>
-		<mdui-divider></mdui-divider>
-		<mdui-menu-item value="auto">System</mdui-menu-item>
-		</mdui-menu>
-	  </mdui-dropdown>
+    <div class="container" id="version-container">
+        <!-- Version will be dynamically added here -->
+    </div>
+    <div class="container">
+        <mdui-list>
+            <mdui-list-item>
+                <div class="module-list">
+                    <span class="module-name">Root</span>
+                    <span id="status-root" class="status-box"></span>
+                </div>
+            </mdui-list-item>
+            <mdui-list-item>
+                <div class="module-list">
+                    <span class="module-name">Tracer</span>
+                    <span id="status-tracer" class="status-box"></span>
+                </div>
+            </mdui-list-item>
+            <mdui-list-item>
+                <div class="module-list">
+                    <span class="module-name">Zygote32</span>
+                    <span id="status-zygote32" class="status-box"></span>
+                </div>
+            </mdui-list-item>
+            <mdui-list-item>
+                <div class="module-list">
+                    <span class="module-name">Zygote64</span>
+                    <span id="status-zygote64" class="status-box"></span>
+                </div>
+            </mdui-list-item>
+        </mdui-list>
+    </div>
+    <div class="container" id="module-container">
+        <!-- Module list will be dynamically added here -->
+        <mdui-list>
+            <mdui-list-item>No modules loaded</mdui-list-item>
+        </mdui-list>
+    </div>
+    <div class="container">
+        <div class="switch-container">
+            <span>
+                <mdui-list>
+                    <mdui-list-item>Enforce denylist</mdui-list-item>
+                </mdui-list>
+            </span>
+            <span class="switch-right">
+                <mdui-switch id="enforce-denylist-switch" checked=true style="margin-top: 0px"></mdui-switch>
+            </span>
+        </div>
+    </div>
 
-	</mdui-top-app-bar>
+    <script>
+        // Event listeners for theme selection
+        const menuItems = document.querySelectorAll('mdui-menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const theme = item.getAttribute('value');
+                const html = document.querySelector('html');
+                html.setAttribute('class', `mdui-theme-${theme}`);
+            });
+        });
 
-	<!-- Set font -->
-	<style>
-		body {
-			font-family: 'Open Sans';font-size: 22px;
-		}
-	</style>
-	<mdui-list>
+        // Switch
+        const switchElem = document.getElementById('enforce-denylist-switch');
+        switchElem.variant = 'outlined';
+        switchElem.addEventListener('click', () => {
+            if (switchElem.checked) {
+                ksu.exec('echo 1 >> /data/adb/modules/zygisksu/noable');
+            } else {
+                ksu.exec('rm /data/adb/modules/zygisksu/noable');
+            }
+        });
 
-	  <mdui-collapse accordion>
-		<mdui-collapse-item accordion >
-		  <mdui-list-item slot="header" icon="arrow_drop_down">Version</mdui-list-item>
-		  <div style="margin-left: 2.5rem">
-			<mdui-list-item>I don't know</mdui-list-item>
-		  </div>
-		</mdui-collapse-item>
-		<mdui-collapse-item>
-		  <mdui-list-item slot="header" icon="near_me">Dashboard</mdui-list-item>
-		  <div style="margin-left: 2.5rem">
-			<mdui-list-item>Root implementation - 😊</mdui-list-item>
-			<mdui-list-item>Tracer                 - 😊</mdui-list-item>
-			<mdui-list-item>Daemon                 - 😊</mdui-list-item>
-			<mdui-list-item>Zygote                 - 😊</mdui-list-item>
+        try {
+            // Zygisk Version
+            const versionInfo = ksu.exec('/data/adb/modules/zygisksu/bin/zygiskd64 version');
+            // Parse the versionInfo to remove unnecessary text
+            const parsedVersionInfo = versionInfo.replace(/^Zygisk Next daemon\s+/i, ''); // Removes "Zygisk Next daemon" from the beginning
+            document.getElementById('version-container').innerHTML = `
+                <mdui-list>
+                    <mdui-list-item>${parsedVersionInfo}</mdui-list-item>
+                </mdui-list>
+            `;
 
-		  </div>
-		</mdui-collapse-item>
-		<mdui-collapse-item>
-		<mdui-list-item slot="header" icon="near_me">Module</mdui-list-item>
-			<div style="margin-left: 2.5rem">
-			</div>
+            // Module Status
+            const statusInfo = JSON.parse(ksu.exec('cat /data/adb/modules/zygisksu/info.json'));
+            updateStatus('Root', statusInfo.a);
+            updateStatus('Tracer', statusInfo.b);
+            updateStatus('Zygote32', statusInfo.p32);
+            updateStatus('Zygote64', statusInfo.p64);
 
-		</mdui-collapse-item>
-		<mdui-card style="width: 100px;height: 20px;text-align:right">Enable forced uninstall</mdui-card>
-		<mdui-switch checked=true></mdui-switch>
+            // Module List
+            const moduleList = statusInfo.in64
+                .split(':')[2]
+                .split(',')
+                .map(module => {
+                    // Remove "-", "_" and capitalize first letter of each word
+                    return module.replace(/[_-]+/g, ' ')
+                                .replace(/(?:^|\s)\S/g, char => char.toUpperCase());
+                })
+                .filter(Boolean);
+            const moduleListContainer = document.getElementById('module-container');
+            if (moduleList.length === 0) {
+                moduleListContainer.style.display = 'none';
+            } else {
+                moduleListContainer.style.display = 'block';
+                const moduleListHtml = `
+                    <mdui-list>
+                        ${moduleList.map(module => `<mdui-list-item><div class="module-list"><span class="module-name">${module}</span> <span class="status-box status-green">😊 Up</span></div></mdui-list-item>`).join('')}
+                    </mdui-list>
+                `;
+                moduleListContainer.innerHTML = moduleListHtml;
+            }
 
-	</mdui-list>
+        } catch (error) {
+            console.error('Error:', error);
+            const versionContainer = document.getElementById('version-container');
+            versionContainer.classList.remove('status-green');
+            versionContainer.classList.add('status-red');
+            versionContainer.innerHTML = `
+                <mdui-list>
+                    <mdui-list-item>KSU or APatch not found</mdui-list-item>
+                </mdui-list>
+            `;
 
-    <title>Zygisk Webui</title>
-  </head>
-  <body>
-    <!--<mdui-button>Zygisk Webui</mdui-button>-->
-  </body>
-  <script>
+            updateStatusUnavailable('Root');
+            updateStatusUnavailable('Tracer');
+            updateStatusUnavailable('Zygote32');
+            updateStatusUnavailable('Zygote64');
+        }
 
-	const witch = document.querySelector('mdui-switch');
-	console.log(witch)
-	  // 设置 JavaScript 属性
-	  witch.variant = 'outlined';
-	  witch.addEventListener('click', () => {
-			//console.log('对话框开始打开时，会触发该事件');
-			//alert('Art')
-			console.log(witch.checked)
-			if (witch.checked){
-				info = ksu.exec('echo 1 >> /data/adb/modules/zygisksu/noable');//关闭按钮
-				//alert(info);
-			}{
-				info = ksu.exec('rm /data/adb/modules/zygisksu/noable');//开启按钮
-				//alert(info);
-			}
-	  });
-	  // 读取 JavaScript 属性
-	  console.log(witch.variant); // outlined
-	  const div = document.querySelectorAll('div');
-	  //div[2].innerHTML="<mdui-list-item>LSPosed                 - 😊</mdui-list-item>\n<mdui-list-item>LSPosed                 - 😊</mdui-list-item>"
-	  const item = document.querySelectorAll('mdui-list-item');
-	  const menu_item = document.querySelectorAll('mdui-menu-item');
-	  menu_item[0].addEventListener('click', () => {
-			//亮色模式
-			const html = document.querySelectorAll('html');
-			html[0].setAttribute("class","mdui-theme")
-	  });
-	  menu_item[1].addEventListener('click', () => {
-			//暗色模式
-			const html = document.querySelectorAll('html');
-			html[0].setAttribute("class","mdui-theme-dark")
-	  });
-	  menu_item[2].addEventListener('click', () => {
-			//auto
-			const html = document.querySelectorAll('html');
-			html[0].setAttribute("class","mdui-theme-auto")
-	  });
+        function updateStatus(moduleName, status) {
+            const statusBox = document.getElementById('status-' + moduleName.toLowerCase());
+            if (status === 0) {
+                statusBox.classList.remove('status-red');
+                statusBox.classList.add('status-green');
+                statusBox.textContent = '😊 Up';
+            } else {
+                statusBox.classList.remove('status-green');
+                statusBox.classList.add('status-red');
+                statusBox.textContent = '❌ Stopped';
+            }
+        }
 
-	  //item[1].textContent='1.0-RC2(245)';
-	  try	{
-		info = ksu.exec('/data/adb/modules/zygisksu/bin/zygiskd64 version');
-		item[1].textContent=info;
-		info = ksu.exec('cat /data/adb/modules/zygisksu/noable');
-		if (info!=""){
-			witch.checked=false;
-		}
-		info = ksu.exec('cat /data/adb/modules/zygisksu/info.json');
-		//alert(info)
-		//var info = '{"a":0,"b":0,"p32":0,"p64":0}'
-		list = JSON.parse(info)
-		switch(list.a){
-			case 0:
-				item[3].textContent="Root implementemtation - 😊tracing";
-				break
-			case 1:
-				item[3].textContent="Root implementemtation - ❌stopped";
-				break
-			case 2:
-				item[3].textContent="Root implementemtation - ❌exitd";
-				break
-		}
-		switch(list.a){
-			case 0:
-				item[4].textContent="Zygote                 - 😊tracing";
-				break
-			case 1:
-				item[4].textContent="Zygote                 - ❌stopped";
-				break
-			case 2:
-				item[4].textContent="Zygote                 - ❌exitd";
-				break
-		}
-		switch(list.p32){
-			case 0:
-				item[5].textContent="daemon[32]             - 😊tracing";
-				break
-			case 1:
-				item[5].textContent="daemon[32]             - ❌stopped";
-				break
-			case 2:
-				item[5].textContent="daemon[32]             - ❌exitd";
-				break
-		}
-		switch(list.p64){
-			case 0:
-				item[6].textContent="daemon[64]             - 😊tracing";
-				break
-			case 1:
-				item[6].textContent="daemon[64]             - ❌stopped";
-				break
-			case 2:
-				item[6].textContent="daemon[64]             - ❌exitd";
-				break
-		}
-		var mod="Root: Apatch,module(1): zygisk_lsposed"
-		mod=list.in64
-		list = mod.split(":")[2]
-		mod=list.split(",")
-		modlist=""
-		for (i=0;i<mod.length;i++){
-			modlist +="<mdui-list-item>"+mod[i]+"- 😊 </mdui-list-item>"
-		}
-		div[2].innerHTML=modlist
-
-	  }catch(i){
-		item[1].textContent=i;
-		//item[3].textContent=i;
-		//item[4].textContent=i;
-		//item[5].textContent=i;
-		//item[6].textContent=i;
-	  }
-</script>
+        function updateStatusUnavailable(moduleName) {
+            const statusBox = document.getElementById('status-' + moduleName.toLowerCase());
+            statusBox.classList.remove('status-green');
+            statusBox.classList.add('status-red');
+            statusBox.textContent = '❌ Unavailable';
+        }
+    </script>
+</body>
 </html>
