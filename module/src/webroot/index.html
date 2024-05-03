@@ -1,10 +1,14 @@
 <!doctype html>
-<html lang="zh-CN" class="mdui-theme-auto">
+<html lang="en-EN" class="mdui-theme-auto">
 
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
     <meta name="renderer" content="webkit"/>
+
+	<!-- OpenSans-->
+	<link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+
 	<!-- Filled fonts.googleapis.com-->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -25,38 +29,41 @@
     <!-- 如果使用了组件的 icon 属性，还需要引入图标的 CSS 文件 -->
 	<mdui-top-app-bar style="position: relative;">
 
-	  <mdui-top-app-bar-title>Zygisk_mod</mdui-top-app-bar-title>
+	  <mdui-top-app-bar-title>OpenZygisk</mdui-top-app-bar-title>
 	  <mdui-dropdown>
 		<mdui-button-icon slot="trigger" icon="more_vert"></mdui-button-icon>
 
 		<mdui-menu selects="single" value="auto" class="menu">
-		<mdui-menu-item value="light">亮色模式</mdui-menu-item>
-		<mdui-menu-item value="dark">暗色模式</mdui-menu-item>
+		<mdui-menu-item value="light">Light</mdui-menu-item>
+		<mdui-menu-item value="dark">Dark</mdui-menu-item>
 		<mdui-divider></mdui-divider>
-		<mdui-menu-item value="auto">跟随系统</mdui-menu-item>
+		<mdui-menu-item value="auto">System</mdui-menu-item>
 		</mdui-menu>
 	  </mdui-dropdown>
 
-
-
-
-
 	</mdui-top-app-bar>
+
+	<!-- Set font -->
+	<style>
+		body {
+			font-family: 'Open Sans';font-size: 22px;
+		}
+	</style>
 	<mdui-list>
 
 	  <mdui-collapse accordion>
 		<mdui-collapse-item accordion >
 		  <mdui-list-item slot="header" icon="arrow_drop_down">Version</mdui-list-item>
 		  <div style="margin-left: 2.5rem">
-			<mdui-list-item>i dont' know</mdui-list-item>
+			<mdui-list-item>I don't know</mdui-list-item>
 		  </div>
 		</mdui-collapse-item>
 		<mdui-collapse-item>
 		  <mdui-list-item slot="header" icon="near_me">Dashboard</mdui-list-item>
 		  <div style="margin-left: 2.5rem">
-			<mdui-list-item>Root implementemtation - 😊</mdui-list-item>
+			<mdui-list-item>Root implementation - 😊</mdui-list-item>
 			<mdui-list-item>Tracer                 - 😊</mdui-list-item>
-			<mdui-list-item>Deamon                 - 😊</mdui-list-item>
+			<mdui-list-item>Daemon                 - 😊</mdui-list-item>
 			<mdui-list-item>Zygote                 - 😊</mdui-list-item>
 
 		  </div>
@@ -67,7 +74,7 @@
 			</div>
 
 		</mdui-collapse-item>
-		<mdui-card style="width: 100px;height: 20px;text-align:right">开启强制卸载</mdui-card>
+		<mdui-card style="width: 100px;height: 20px;text-align:right">Enable forced uninstall</mdui-card>
 		<mdui-switch checked=true></mdui-switch>
 
 	</mdui-list>
