@@ -32,7 +32,7 @@ if [ "$BOOTMODE" ] && [ "$KSU" ]; then
   if [ "$(which magisk)" ]; then
     ui_print "*********************************************************"
     ui_print "! Multiple root implementation is NOT supported!"
-    ui_print "! Please uninstall Magisk before installing Zygisk_mod"
+    ui_print "! Please uninstall Magisk before installing OpenZygisk"
     abort    "*********************************************************"
   fi
   elif [ "$BOOTMODE" ] && [ "$APATCH" ]; then
@@ -59,7 +59,7 @@ else
 fi
 
 VERSION=$(grep_prop version "${TMPDIR}/module.prop")
-ui_print "- Installing Zygisk_mod $VERSION"
+ui_print "- Installing OpenZygisk $VERSION"
 
 # check android
 if [ "$API" -lt 26 ]; then

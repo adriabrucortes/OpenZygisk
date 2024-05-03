@@ -19,7 +19,7 @@ val gitCommitCount = "git rev-list HEAD --count".execute().toInt()
 val gitCommitHash = "git rev-parse --verify --short HEAD".execute()
 
 val moduleId by extra("zygisksu")
-val moduleName by extra("Zygisk_mod")
+val moduleName by extra("OpenZygisk")
 val verName by extra("v4-0.9.3")
 val verCode by extra(gitCommitCount)
 val commitHash by extra(gitCommitHash)

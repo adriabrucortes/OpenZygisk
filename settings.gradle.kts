@@ -16,7 +16,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Zygisk_mod"
+rootProject.name = "OpenZygisk"
 include(
     ":loader",
     ":module",
