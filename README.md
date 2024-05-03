@@ -1,8 +1,6 @@
-# Zygisk_mod
+# OpenZygisk
 
-My change to zygisk  
-due to zygisk_next is closesource,there are some opensource implementation  
-Standalone implementation of Zygisk, providing Zygisk API support for KernelSU,Apatch and a replacement of Magisk's built-in Zygisk.
+Opensource implementation of Zygisk forked from Admirepowered/Zygisk_mod for English speakers. Provides Zygisk API support for KernelSU, Apatch and a replacement of Magisk's built-in Zygisk.
 
 
 ## Requirements
@@ -28,7 +26,8 @@ Standalone implementation of Zygisk, providing Zygisk API support for KernelSU,A
 + Built-in Zygisk turned off
 ## Credits
 
-- [Zygisk Next](https://github.com/Dr-TSNG/ZygiskNext): The opensource code
+- [Zygisk Next](https://github.com/Dr-TSNG/ZygiskNext): The original code
+- [Zygisk_mod](https://github.com/Admirepowered/Zygisk_mod): The principal FOSS fork (Chinese)
 
 ## Compatibility
 
